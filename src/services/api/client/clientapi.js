@@ -7,7 +7,6 @@ const header = {headers: { authorization: `Bearer ${getInStore(TOKEN_KEY)}`} }
 export async function getAllClientByEmailUser(){
     const url = BASE_URL + 'client/' + JWTDecode(getInStore(TOKEN_KEY)).login.email
     const result = await axios.get(url, header)
-    console.log(result.data)
     return result.data
 }
 

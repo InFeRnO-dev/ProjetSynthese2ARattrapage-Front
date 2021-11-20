@@ -3,7 +3,7 @@ import InputLabel from '../components/form/inputLabel'
 import { getUserByEmail, insertUser } from '../services/api/admin/userapi'
 import { formHandleChange } from '../services/formService'
 import styles from '../style/login.module.css'
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 toast.configure()
 
@@ -56,6 +56,9 @@ export default function Register(props) {
         else if(await getUserByEmail(credentials.email) !== ""){
             toast.warning("Cette adresse email est déjà utilisée")
         }
+        else if(credentials.pwd !== credentials.confpwd){
+            toast.warning("Les mots de passe ne correspondent pas")
+        }
         else {
             console.log (credentials)
             await insertUser(credentials.email,
@@ -81,22 +84,59 @@ export default function Register(props) {
                 <form onSubmit={handleSubmit}>
                     <div className={`row ${styles.row}`}>
                         <h1 className="mt-3" style={{textAlign: 'center'}}>Création de compte</h1>
-                        <div className="col-5 offset-2">
-                            <InputLabel name="email" className="form-control my-3 p-2" value={credentials.email} change={handleChange} type="Email" label="Email" placeholder="mr.dupont@mail.fr" required="true"/>
-                            <InputLabel name="nom" className="form-control my-3 p-2" value={credentials.nom} change={handleChange} type="text" label="Nom" placeholder="DUPONT" required="true"/>
-                            <InputLabel name="date_naissance" className="form-control my-3 p-2" value={credentials.date_naissance} change={handleChange} type="date" label="Date de naissance" placeholder="01/01/1901" required="true"/>
-                            <InputLabel name="adresse_1" className="form-control my-3 p-2" value={credentials.adresse_1} change={handleChange} type="text" label="Adresse postale" placeholder="12 rue du paradis" required="true"/>
-                            <InputLabel name="code_postal" className="form-control my-3 p-2" value={credentials.code_postal} change={handleChange} type="number" label="Code postal" placeholder="13000" required="true" pattern="[0-9]"/>
-                            <InputLabel name="ca_annuel_max" className="form-control my-3 p-2" value={credentials.ca_annuel_max} change={handleChange} type="number" label="CA annuel max" placeholder="100000" required="true"/>
-                        </div>
-                        <div className="col-5">
-                            <InputLabel name="pwd" className="form-control my-3 p-2" value={credentials.pwd} change={handleChange} type="password" label="Mot de passe" placeholder="********" required="true"/>
-                            <InputLabel name="prenom" className="form-control my-3 p-2" value={credentials.prenom} change={handleChange} type="text" label="Prenom" placeholder="Pierre" required="true"/>
-                            <InputLabel name="numero_telephone" className="form-control my-3 p-2" value={credentials.numero_telephone} change={handleChange} type="number" label="Numéro de téléphone" placeholder="0601020304" required="true"/>
-                            <InputLabel name="adresse_2" className="form-control my-3 p-2" value={credentials.adresse_2} change={handleChange} type="text" label="Complément d'adresse" placeholder="Batiment B"/>
-                            <InputLabel name="ville" className="form-control my-3 p-2" value={credentials.ville} change={handleChange} type="text" label="Ville" placeholder="Marseille" required="true"/>
-                            <InputLabel name="taux_charge" className="form-control my-3 p-2" value={credentials.taux_charge} change={handleChange} type="number" label="Taux de charge" placeholder="20" required="true"/>
-                        </div>
+                        <div className="row">
+                                <div className="col-6">
+                                    <InputLabel name="email" className="form-control my-3 p-2" value={credentials.email} change={handleChange} type="Email" label="Email" placeholder="mr.dupont@ping-pong.fr" required="true"/>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-6">
+                                    <InputLabel name="pwd" className="form-control my-3 p-2" value={credentials.pwd} change={handleChange} type="password" label="Mot de passe" placeholder="********" required="true"/>
+                                    </div>
+                                <div className="col-6">
+                                    <InputLabel name="confpwd" className="form-control my-3 p-2" value={credentials.confpwd} change={handleChange} type="password" label="Confirmation du mot de passe" placeholder="********" required="true"/>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-6">
+                                    <InputLabel name="nom" className="form-control my-3 p-2" value={credentials.nom} change={handleChange} type="text" label="Nom" placeholder="DUPONT" required="true"/>
+                                </div>
+                                <div className="col-6">
+                                    <InputLabel name="prenom" className="form-control my-3 p-2" value={credentials.prenom} change={handleChange} type="text" label="Prenom" placeholder="Pierre" required="true"/>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-6">
+                                    <InputLabel name="date_naissance" className="form-control my-3 p-2" value={credentials.date_de_naissance} change={handleChange} type="date" label="Date de naissance" placeholder="01/01/1901" required="true"/>
+                                </div>
+                                <div className="col-6">
+                                    <InputLabel name="numero_telephone" className="form-control my-3 p-2" value={credentials.numero_telephone} change={handleChange} type="number" label="Numéro de téléphone" placeholder="0601020304" required="true"/>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-6">
+                                    <InputLabel name="adresse_1" className="form-control my-3 p-2" value={credentials.adresse_1} change={handleChange} type="text" label="Adresse postale" placeholder="12 rue du paradis" required="true"/>
+                                </div>
+                                <div className="col-6">
+                                    <InputLabel name="adresse_2" className="form-control my-3 p-2" value={credentials.adresse_2} change={handleChange} type="text" label="Complément d'adresse" placeholder="Batiment B"/>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-6">
+                                    <InputLabel name="code_postal" className="form-control my-3 p-2" value={credentials.code_postal} change={handleChange} type="number" label="Code postal" placeholder="13000" required="true" pattern="[0-9]"/>
+                                </div>
+                                <div className="col-6">
+                                    <InputLabel name="ville" className="form-control my-3 p-2" value={credentials.ville} change={handleChange} type="text" label="Ville" placeholder="Marseille" required="true"/>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-6">
+                                    <InputLabel name="ca_annuel_max" className="form-control my-3 p-2" value={credentials.ca_annuel_max} change={handleChange} type="number" label="CA annuel max" placeholder="100000" required="true"/>
+                                </div>
+                                <div className="col-6">
+                                    <InputLabel name="taux_charge" className="form-control my-3 p-2" value={credentials.taux_charge} change={handleChange} type="number" label="Taux de charge" placeholder="20" required="true"/>
+                                </div>
+                            </div>
                         <div className="form-row">
                             <div className="col-12">
                                 <button type="submit" className="btn btn-primary mt-1 w-100">Enregistrer</button>

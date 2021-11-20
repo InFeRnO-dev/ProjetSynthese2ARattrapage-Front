@@ -1,5 +1,5 @@
 import { JWTDecode } from "./api/admin/userapi"
-import { getInStore, TOKEN_KEY } from "./store"
+import { getInStore, removeInStore, TOKEN_KEY } from "./store"
 import { isExpired } from "./tokenService"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -20,6 +20,5 @@ export const isAuthorized = () => {
 
 export const isAdmin = () => {
     const token = JWTDecode()
-    console.log(token)
     return token.login.administrator
 }

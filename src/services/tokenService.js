@@ -12,7 +12,6 @@ export const removeUserLocalStorage = () => {
 
 export const isConnected = () => {
     const token = getInStore(TOKEN_KEY)
-    console.log(token);
     if(token){
         if(token.id){
             return true
@@ -37,11 +36,6 @@ export const isExpired = () => {
     
 }
 
-export const logoff = (context) => {
+export const logout = () => {
     removeUserLocalStorage()
-    context.token = ""
-    context.isConnected = false
-    context.droits = []
-    context.expiration = ""
-
 }

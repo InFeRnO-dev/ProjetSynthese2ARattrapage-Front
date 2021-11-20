@@ -1,10 +1,11 @@
 import React from 'react'
+import { logout } from '../../services/tokenService'
 import { isAdmin } from '../../services/userService'
 
 export default function Nav() {
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container-fluid">
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
@@ -28,8 +29,8 @@ export default function Nav() {
                                 Projets
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a className="dropdown-item" href="#">Voir la liste des Projets</a></li>
-                                <li><a className="dropdown-item" href="#">Ajouter un Projet</a></li>
+                                <li><a className="dropdown-item" href="/projet">Voir la liste des Projets</a></li>
+                                <li><a className="dropdown-item" href="/projet/ajouter">Ajouter un Projet</a></li>
                             </ul>
                         </li>
                         <li className="nav-item dropdown">
@@ -42,14 +43,16 @@ export default function Nav() {
                             </ul>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link active" aria-current="page" href="/">Vos Informations</a>
+                            <a className="nav-link active" aria-current="page" href="/user/info">Vos Informations</a>
                         </li>
                         {isAdmin() &&
                             <li className="nav-item">
                                 <a className="nav-link active" aria-current="page" href="/admin">Administration</a>
                             </li>
-                    
                         }
+                        <li className="nav-item">
+                            <a className="nav-link active" aria-current="page" href="/login" onClick={() => logout()}><i className="bi bi-door-closed-fill"></i></a>
+                        </li>
                     </ul>
                 </div>
             </div>
