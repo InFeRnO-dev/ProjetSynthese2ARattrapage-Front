@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from "react-router-dom";
-import { formHandleChange } from '../../services/formService';
+import { Redirect } from 'react-router'
+import { formatDate, formHandleChange } from '../../services/formService';
 import InputLabel from '../form/inputLabel'
 import { deleteUser, updateUser, getUserByEmail } from '../../services/api/admin/userapi';
 import { toast } from 'react-toastify';
+import { isAuthorized } from '../../services/userService';
 toast.configure()
 
 export default function UserLine(props) {
     const regexcodepostal = /^[0-9]{5}$/gm
     const regexnumerotelephone = /^[0-9]{10}$/gm
-    let date = new Date(props.user.date_de_naissance)
-    props.user.date_de_naissance  = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().split('T')[0]
-    console.log(props.user)
-    console.log(props.index)
     let history = useHistory()
     const [render, setrender] = useState()
     const [email, setemail] = useState(props.user.email)
@@ -21,7 +19,7 @@ export default function UserLine(props) {
                                                     confpwd: '',
                                                     nom: props.user.nom,
                                                     prenom: props.user.prenom,
-                                                    date_de_naissance: props.user.date_de_naissance,
+                                                    date_de_naissance: formatDate(props.user.date_de_naissance),
                                                     numero_telephone: props.user.numero_telephone,
                                                     adresse_1: props.user.adresse_1,
                                                     adresse_2: props.user.adresse_2,
@@ -39,7 +37,6 @@ export default function UserLine(props) {
     const handleSubmitEdit = async (event) => {
         event.preventDefault()
         if(credentials.numero_telephone.length !== 10) {
-            console.log("erreur tel > 10")
             toast.warning("Le numéro de téléphone doit faire 10 caractères")
             return
         }
@@ -69,7 +66,6 @@ export default function UserLine(props) {
         }
         if(email !== credentials.email){
             const temp = await getUserByEmail(credentials.email)
-            console.log(temp)
             if(temp !== ""){
                 toast.warning("Cette adresse email est déjà utilisée")
                 return
@@ -79,7 +75,6 @@ export default function UserLine(props) {
             toast.warning("Les mots de passe ne correspondent pas")
             return
         }
-        console.log (credentials)
         await updateUser(credentials.email,
                             credentials.pwd,
                             credentials.nom,
@@ -94,7 +89,6 @@ export default function UserLine(props) {
                             credentials.taux_charge,
                             credentials.administrator,
                             email)
-        console.log('submit !')
         toast.success("Modification effectuée.")
         history.push("/admin")
     }
@@ -133,7 +127,7 @@ export default function UserLine(props) {
         }
     }, [])
 
-    return (
+    return isAuthorized() ?(
 
         <>
         <div className="row border-bottom">
@@ -263,5 +257,7 @@ export default function UserLine(props) {
             </div>
         </div>
         </>
+    ) : (
+        <Redirect to='/login' />
     )
 }

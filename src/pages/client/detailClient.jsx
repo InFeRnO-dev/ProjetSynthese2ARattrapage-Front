@@ -6,10 +6,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import Nav from '../../components/header/nav';
 import { isAuthorized } from '../../services/userService';
 import { Redirect } from 'react-router';
-import { deleteclient, updateClient } from '../../services/api/client/clientapi';
+import { deleteClient, updateClient } from '../../services/api/client/clientapi';
 
 export default function DetailClient(props) {
-    console.log(props)
     const regexcodepostal = /^[0-9]{5}$/gm
     const regexnumerotelephone = /^[0-9]{10}$/gm
     const [render, setrender] = useState()
@@ -33,7 +32,6 @@ export default function DetailClient(props) {
     const handleSubmit = async (event) => {
         event.preventDefault()
         if(client.numero_telephone.length !== 10) {
-            console.log("erreur tel > 10")
             toast.warning("Le numéro de téléphone doit faire 10 caractères")
         }
         else if(regexnumerotelephone.exec(client.numero_telephone) === null) {
@@ -64,18 +62,20 @@ export default function DetailClient(props) {
                                 client.numero_telephone,
                                 client.email,
                                 props.match.params.id_client)
-            console.log('submit !')
             toast.success("Le client a été modifié !")
         }
     }
 
-    const handleSubmitDelete = (event) => {
+    const handleSubmitDelete = async (event) => {
         event.preventDefault()
-        //const projets = getProjetByIdClient(props.match.params.id_client)
-        //if(projets === undefined){}
-        deleteclient(props.match.params.id_client)
-        toast.success("Le client a été supprimé !")
-        props.history.push('/client')
+        if(await deleteClient(props.match.params.id_client) === false){
+            toast.warning(`Le client contient des projets. Suppression impossible !`)
+            return
+        }
+        else{
+            toast.success("Le client a été supprimé !")
+            props.history.push('/client')
+        } 
     }
 
     useEffect(() => {
@@ -143,7 +143,7 @@ export default function DetailClient(props) {
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title" id={"deleteClientModalLabel" + props.index}>Supprimer un utilisateur</h5>
+                        <h5 className="modal-title" id={"deleteClientModalLabel" + props.index}>Supprimer un client</h5>
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form onSubmit={handleSubmitDelete}>

@@ -15,14 +15,12 @@ export default function Client() {
 
     async function getClients(){
         if(search.search.trim() === ""){
-            console.log('getall')
             setclients(await getAllClientByEmailUser())
             setdatamodif(true)
             setrender(<>{clients.map((linkData, index) => {return <ClientLine key={index} index={linkData.id_client} client={linkData}/>})}</>)
         }
         else{
             const clients = (await getClientsBySearch(search.search)).data
-            console.log(clients)
             if(clients !== undefined && clients.length > 0){
                 setclients(clients)
                 setrender(<>{clients.map((linkData, index) => {return <ClientLine key={index} index={linkData.id_client} client={linkData}/>})}</>)

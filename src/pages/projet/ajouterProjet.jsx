@@ -26,13 +26,11 @@ export default function AjouterProjet(props) {
 
     async function getAllClients(){
         const client = await getAllClientByEmailUser()
-        console.log(client)
         setoptionsClient(client)
     }
 
     async function getAllStatuts(){
         const statut = await getAllStatut()
-        console.log(statut)
         setoptionsStatut(statut)
     }
 
@@ -53,7 +51,6 @@ export default function AjouterProjet(props) {
             toast.warning("Veuillez saisir un statut dans la liste déroulante")
         }
         else {
-            console.log(projet.nom, projet.id_client, projet.id_statut)
             await insertProjet(projet.nom, projet.id_client, projet.id_statut)
             toast.success("Le projet a été ajouté !")
             props.history.push('/projet')

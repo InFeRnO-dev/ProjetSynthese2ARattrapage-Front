@@ -14,7 +14,6 @@ import { deleteProjet, updateProjet } from '../../services/api/projet/projetapi'
 toast.configure()
 
 export default function ProjetLine(props) {
-    console.log(props)
     const [projet, setprojet] = useState({nom: props.projet.nom, id_statut: props.projet.id_statut, id_client: props.projet.id_client})
     const [optionsClient, setoptionsClient] = useState([])
     const [optionsStatut, setoptionsStatut] = useState([])
@@ -59,9 +58,12 @@ export default function ProjetLine(props) {
 
     const handleSubmitDelete = async (event) => {
         event.preventDefault()
-        await deleteProjet(props.projet.id_projet)
-        toast.success("Le projet a été supprimé !")
-
+        if(await deleteProjet(props.projet.id_projet) === false){
+            toast.warning(`Le projet contient des factures. Suppression impossible !`)
+        }
+        else{
+            toast.success("Le projet a été supprimé !")
+        }
     }
 
     const onSelectClient = (event) =>{
@@ -89,8 +91,8 @@ export default function ProjetLine(props) {
                     <p>{props.projet.label}</p>
                 </div>
                 <div className="col-3 mt-2">
-                    <button className="btn btn-warning" data-bs-toggle="modal" data-bs-target={"#editProjetModal" + props.index}>Modifier</button>
-                    <button className="btn btn-danger" data-bs-toggle="modal" data-bs-target={"#deleteProjetModal" + props.index}>Supprimer</button>
+                    <button className="btn btn-warning" data-bs-toggle="modal" data-bs-target={"#editProjetModal" + props.index}><i class="bi bi-pencil-square"></i></button>
+                    <button className="btn btn-danger" data-bs-toggle="modal" data-bs-target={"#deleteProjetModal" + props.index}><i class="bi bi-trash"></i></button>
                 </div>
             </div>
 

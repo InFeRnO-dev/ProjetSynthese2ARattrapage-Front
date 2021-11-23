@@ -32,7 +32,6 @@ export default function AjouterClient(props) {
     const handleSubmit = async (event) => {
         event.preventDefault()
         if(client.numero_telephone.length !== 10) {
-            console.log("erreur tel > 10")
             toast.warning("Le numéro de téléphone doit faire 10 caractères")
         }
         else if(regexnumerotelephone.exec(client.numero_telephone) === null) {
@@ -53,7 +52,6 @@ export default function AjouterClient(props) {
                 client.prenom = client.nom_contact_prenom
                 client.nom_contact = null
             }
-            console.log(client)
             await insertClient(client.nom,
                                client.nom_contact,
                                client.prenom,
@@ -63,7 +61,6 @@ export default function AjouterClient(props) {
                                client.ville,
                                client.numero_telephone,
                                client.email)
-            console.log('submit !')
             toast.success("Le client a été ajouté !")
             props.history.push('/client')
         }
@@ -78,10 +75,10 @@ export default function AjouterClient(props) {
                     <div className="row mt-4">
                         <div className="col offset-5">
                             <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                <input type="radio" className="btn-check" value="entreprise" name="btntype" onChange={() => (client.type = 'entreprise', console.log(client.type))} id="btntypeentreprise" autoComplete="off" defaultChecked />
+                                <input type="radio" className="btn-check" value="entreprise" name="btntype" onChange={() => client.type = 'entreprise'} id="btntypeentreprise" autoComplete="off" defaultChecked />
                                 <label className="btn btn-outline-primary" htmlFor="btntypeentreprise">Entreprise</label>
 
-                                <input type="radio" className="btn-check" value="personne" name="btntype" onChange={() => (client.type = 'personne', console.log(client.type))} id="btntypepersonne" autoComplete="off" />
+                                <input type="radio" className="btn-check" value="personne" name="btntype" onChange={() => client.type = 'personne'} id="btntypepersonne" autoComplete="off" />
                                 <label className="btn btn-outline-primary" htmlFor="btntypepersonne">Personne</label>
                             </div>
                         </div>

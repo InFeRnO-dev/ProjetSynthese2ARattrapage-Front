@@ -17,9 +17,7 @@ export default function Login() {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-        console.log(login.email, login.pwd)
         const token = await getTokenByEmail(login.email, login.pwd)
-        console.log(token)
         if(token !== "" && token !== undefined){
             setInStore(TOKEN_KEY, token.data.token)
             history.push("/")

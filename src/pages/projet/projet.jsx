@@ -24,21 +24,17 @@ export default function Projet(){
     }
 
     async function getAllProjets(selectedidclient, selectedidstatut){
-        console.log('idclient: ', selectedidclient, 'idstatut: ', selectedidstatut)
         const projet = await getAllProjet(selectedidclient, selectedidstatut)
-        console.log(projet)
         setprojets(projet)
     }
 
     async function getAllClients(){
         const client = await getAllClientByEmailUser()
-        console.log(client)
         setoptionsClient(client)
     }
 
     async function getAllStatuts(){
         const statut = await getAllStatut()
-        console.log(statut)
         setoptionsStatut(statut)
     }
 
@@ -46,22 +42,10 @@ export default function Projet(){
         setidclient(event.target.value)
         await getAllProjets(event.target.value, idstatut)
     }
-    
-    const onRemoveClient = async (selectedList, removedItem) =>{
-        console.log(removedItem)
-        setidclient(0)
-        await getAllProjets(0, idstatut)
-    }
 
     const onSelectStatut = async (event) =>{
         setidstatut(event.target.value)
         await getAllProjets(idclient, event.target.value)
-    }
-    
-    const onRemoveStatut = async (selectedList, removedItem) =>{
-        console.log(removedItem)
-        setidstatut(0)
-        await getAllProjets(idclient, 0)
     }
 
     useEffect(() => {

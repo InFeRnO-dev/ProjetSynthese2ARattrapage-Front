@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import InputLabel from '../components/form/inputLabel'
 import { getUserByEmail, JWTDecode, updateUser } from '../services/api/admin/userapi'
-import { formHandleChange } from '../services/formService'
-import styles from '../style/login.module.css'
-import Moment from 'react-moment';
-import { ToastContainer, toast } from 'react-toastify';
+import { formatDate, formHandleChange } from '../services/formService'
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getInStore, TOKEN_KEY } from '../services/store'
 import Nav from '../components/header/nav'
@@ -19,11 +17,8 @@ export default function UserInfo(props) {
     const [user, setuser] = useState({})
     const [email, setemail] = useState()
     async function getUser(){
-        console.log(JWTDecode(getInStore(TOKEN_KEY)).login.email)
         let user = await getUserByEmail(JWTDecode(getInStore(TOKEN_KEY)).login.email)
-        let date = new Date(user.date_de_naissance)
-        user.date_de_naissance  = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().split('T')[0]
-        console.log(user)
+        user.date_de_naissance  = formatDate(user.date_de_naissance)
         setemail(user.email)
         setuser(user)
     }
@@ -35,7 +30,6 @@ export default function UserInfo(props) {
     const handleSubmit = async (event) => {
         event.preventDefault()
         if(user.numero_telephone.length !== 10) {
-            console.log("erreur tel > 10")
             toast.warning("Le numéro de téléphone doit faire 10 caractères")
             return
         }
@@ -65,7 +59,6 @@ export default function UserInfo(props) {
         }
         if(email !== user.email){
             const temp = await getUserByEmail(user.email)
-            console.log(temp)
             if(temp !== ""){
                 toast.warning("Cette adresse email est déjà utilisée")
                 return
@@ -75,7 +68,6 @@ export default function UserInfo(props) {
             toast.warning("Les mots de passe ne correspondent pas")
             return
         }
-        console.log (user)
         await updateUser(user.email,
                             user.pwd,
                             user.nom,
@@ -90,7 +82,6 @@ export default function UserInfo(props) {
                             user.taux_charge,
                             user.administrator,
                             email)
-        console.log('submit !')
         toast.success("Modification effectuée. Veuillez vous reconnecter")
         logout()
         props.history.push("/login")

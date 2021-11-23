@@ -1,6 +1,7 @@
 import axios from "axios";
 import { getInStore, TOKEN_KEY } from '../../../services/store'
 import { JWTDecode } from "../admin/userapi";
+import { getFactureByIdProjet } from "../facture/factureapi";
 const BASE_URL = "http://localhost:3333/"
 const header = {headers: { authorization: `Bearer ${getInStore(TOKEN_KEY)}`} }
 
@@ -29,10 +30,17 @@ export async function updateProjet(id_projet, nom, id_client, id_statut) {
 }
 
 export async function deleteProjet(id_projet) {
-    const url = BASE_URL + "projet/delete/" + id_projet
-    const result = await axios.delete(url, header)
-    .then((response) => response)
-    .catch((error) => console.log(error))
+    const facture = await getFactureByIdProjet(id_projet)
+    if(facture.length === 0){
+        const url = BASE_URL + "projet/delete/" + id_projet
+        const result = await axios.delete(url, header)
+        .then((response) => response)
+        .catch((error) => console.log(error))
 
     return result
+    }
+    else{
+        return false
+    }
+    
 }

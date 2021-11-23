@@ -1,6 +1,7 @@
 import axios from "axios";
 import { getInStore, TOKEN_KEY } from '../../../services/store'
 import { JWTDecode } from "../admin/userapi";
+import { getAllProjet } from "../projet/projetapi";
 const BASE_URL = "http://localhost:3333/"
 const header = {headers: { authorization: `Bearer ${getInStore(TOKEN_KEY)}`} }
 
@@ -35,9 +36,18 @@ export async function updateClient(nom, nom_contact, prenom, adresse_1, adresse_
     return result
 }
 
-export async function deleteclient(id_client) {
-    const url = BASE_URL + "client/delete/" + id_client
-    const result = await axios.delete(url, header)
-    .then((response) => response)
-    .catch((error) => console.log(error))
+export async function deleteClient(id_client) {
+    const projet = await getAllProjet(id_client, 0)
+    if(projet.length === 0){
+        const url = BASE_URL + "client/delete/" + id_client
+        const result = await axios.delete(url, header)
+        .then((response) => response)
+        .catch((error) => console.log(error))
+
+        return result
+    }
+    else{
+        return false
+    }
+    
 }

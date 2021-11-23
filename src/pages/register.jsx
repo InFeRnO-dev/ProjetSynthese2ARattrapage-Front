@@ -32,7 +32,6 @@ export default function Register(props) {
     const handleSubmit = async (event) => {
         event.preventDefault()
         if(credentials.numero_telephone.length !== 10) {
-            console.log("erreur tel > 10")
             toast.warning("Le numéro de téléphone doit faire 10 caractères")
         }
         else if(regexnumerotelephone.exec(credentials.numero_telephone) === null) {
@@ -60,7 +59,6 @@ export default function Register(props) {
             toast.warning("Les mots de passe ne correspondent pas")
         }
         else {
-            console.log (credentials)
             await insertUser(credentials.email,
                              credentials.pwd,
                              credentials.nom,
@@ -74,7 +72,7 @@ export default function Register(props) {
                              credentials.ca_annuel_max,
                              credentials.taux_charge,
                              credentials.administrator)
-            console.log('submit !')
+            toast.success('Enregistrement effectué ! Vous pouvez vous connecter')
             props.history.push('/login')
         }
     }

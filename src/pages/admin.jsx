@@ -40,7 +40,6 @@ export default function Admin() {
         event.preventDefault()
         const email = await getUserByEmail(credentials.email)
         if(credentials.numero_telephone.length !== 10) {
-            console.log("erreur tel > 10")
             toast.warning("Le numéro de téléphone doit faire 10 caractères")
             return
         }
@@ -76,7 +75,6 @@ export default function Admin() {
             toast.warning("Les mots de passe ne correspondent pas")
             return
         }
-        console.log (credentials)
         await insertUser(credentials.email,
                          credentials.pwd,
                          credentials.nom,
@@ -90,7 +88,6 @@ export default function Admin() {
                          credentials.ca_annuel_max,
                          credentials.taux_charge,
                          credentials.administrator)
-        console.log('submit !')
         toast.success("Ajout effectué")
         getAllUsers()
     }

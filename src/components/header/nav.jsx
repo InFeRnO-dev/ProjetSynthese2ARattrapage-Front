@@ -38,8 +38,8 @@ export default function Nav() {
                                 Factures
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a className="dropdown-item" href="#">Voir la liste des factures</a></li>
-                                <li><a className="dropdown-item" href="#">Ajouter une facture</a></li>
+                                <li><a className="dropdown-item" href="/facture">Voir la liste des factures</a></li>
+                                <li><a className="dropdown-item" href="/facture/ajouter">Ajouter une facture</a></li>
                             </ul>
                         </li>
                         <li className="nav-item">
