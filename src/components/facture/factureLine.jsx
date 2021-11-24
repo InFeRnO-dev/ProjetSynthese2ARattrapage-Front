@@ -72,7 +72,7 @@ export default function FactureLine(props){
         lignes.map((ligne) => {
             calcul +=(ligne.quantite * ligne.prix_unitaire)
         })
-        setprixtotal(calcul)
+        setprixtotal(parseFloat(calcul).toFixed(2))
     }
     const retard = () =>{
         if(props.facture.date_paiement_limite < new Date().toISOString() && props.facture.id_etat === 2){
@@ -158,7 +158,7 @@ export default function FactureLine(props){
                     <p style={retard()}>{props.facture.nom_client}</p>
                 </div>
                 <div className="col-2 mt-2">
-                    <p style={retard()}>{prixtotal}€</p>
+                    <p className="text-center" style={retard()}>{prixtotal}€</p>
                 </div>
                 <div className="col-2 mt-2">
                     <Link to={{ pathname:`/facture/${props.facture.id_entete_facture}`, state: {facture: props.facture}}}><button className="btn btn-secondary"><i className="bi bi-box-arrow-in-right"></i></button></Link>

@@ -52,7 +52,7 @@ export default function ProjetLine(props) {
         else {
             await updateProjet(props.projet.id_projet, projet.nom, projet.id_client, projet.id_statut)
             toast.success("Le projet a été modifié !")
-            {<Redirect to='/projet'/>}
+            window.location.reload(false)
         }
     }
 
@@ -63,6 +63,7 @@ export default function ProjetLine(props) {
         }
         else{
             toast.success("Le projet a été supprimé !")
+            window.location.reload(false)
         }
     }
 

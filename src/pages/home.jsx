@@ -49,11 +49,46 @@ export default function Home(){
           <div className="card border-info mb-3" style={{maxWidth: "24rem"}}>
             <div className="card-header"><b className="">Chiffre d'affaire {CAdate} </b></div>
             <div className="card-body">
-              <p className="card-text">CA annuel: €{CA.ca_annuel}</p>
-              <p className="card-text">Paiements en attente: €{CA.paiements_attente}</p>
-              <p className="card-text">A Facturer: €{CA.a_facturer}</p>
-              <p className="card-text">CA annuel max: €{(parseFloat(user.ca_annuel_max).toFixed(2))}</p>
-              <p className="card-text">CA restant: €{((parseFloat(user.ca_annuel_max) - CA.ca_annuel).toFixed(2))}</p>
+              <div className="row">
+                <div className="col-8">
+                <p className="card-text">CA annuel: </p>
+                </div>
+                <div className="col-4">
+                  <p className="text-end" style={{textAlign: "right"}}>{CA.ca_annuel}€</p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-8">
+                <p className="card-text">Paiements en attente: </p>
+                </div>
+                <div className="col-4">
+                  <p className="text-end" style={{textAlign: "right"}}>{CA.paiements_attente}€</p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-8">
+                <p className="card-text">A Facturer: </p>
+                </div>
+                <div className="col-4">
+                  <p className="text-end" style={{textAlign: "right"}}>{CA.a_facturer}€</p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-8">
+                <p className="card-text">CA annuel max: </p>
+                </div>
+                <div className="col-4">
+                  <p className="text-end" style={{textAlign: "right"}}>{(parseFloat(user.ca_annuel_max).toFixed(2))}€</p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-8">
+                <p className="card-text">CA restant: </p>
+                </div>
+                <div className="col-4">
+                  <p className="text-end" style={{textAlign: "right"}}>{((parseFloat(user.ca_annuel_max) - CA.ca_annuel).toFixed(2))}€</p>
+                </div>
+              </div>
             </div>
             <div className="card-footer">
               <div className="row">

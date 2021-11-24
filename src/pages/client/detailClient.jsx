@@ -75,6 +75,7 @@ export default function DetailClient(props) {
         else{
             toast.success("Le client a été supprimé !")
             props.history.push('/client')
+            window.location.reload(false)
         } 
     }
 

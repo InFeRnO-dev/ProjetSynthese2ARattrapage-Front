@@ -28,7 +28,7 @@ export default function DetailFacture(props) {
         lignes.map((ligne) => {
             calcul +=(ligne.quantite * ligne.prix_unitaire)
         })
-        setprixtotal(calcul)
+        setprixtotal(parseFloat(calcul).toFixed(2))
     }
 
     const handleChange =  (event) => {
@@ -148,7 +148,7 @@ export default function DetailFacture(props) {
                                                     </tr>
                                                     <tr>
                                                         <th colSpan="4" className="text-end">Total :</th>
-                                                        <th className="text-center">{prixtotal + (prixtotal * (facture.taux_charge / 100))}€</th>
+                                                        <th className="text-center">{parseFloat(prixtotal + (prixtotal * (facture.taux_charge / 100))).toFixed(2)}€</th>
                                                     </tr>
                                                     </>
                                                     :
@@ -163,7 +163,7 @@ export default function DetailFacture(props) {
                                                     </tr>
                                                     <tr>
                                                         <th colSpan="3" className="text-end">Total :</th>
-                                                        <th className="text-center">{prixtotal + (prixtotal * (facture.taux_charge / 100))}€</th>
+                                                        <th className="text-center">{parseFloat(prixtotal + (prixtotal * (facture.taux_charge / 100))).toFixed(2)}€</th>
                                                     </tr>
                                                     </>
                                                 }

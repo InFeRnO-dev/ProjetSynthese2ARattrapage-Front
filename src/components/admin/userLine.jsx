@@ -91,6 +91,7 @@ export default function UserLine(props) {
                             email)
         toast.success("Modification effectuée.")
         history.push("/admin")
+        window.location.reload(false)
     }
     const handleSubmitDelete = async (event) => {
         event.preventDefault()
@@ -100,6 +101,7 @@ export default function UserLine(props) {
         }else{
             toast.success(`L'utilisateur a été supprimé`)
             history.push("/admin")
+            window.location.reload(false)
         }
     }
 

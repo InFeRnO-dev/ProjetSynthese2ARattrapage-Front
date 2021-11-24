@@ -16,7 +16,7 @@ export default function LigneFactureLine(props) {
                                                       prix_unitaire: lignesfacture.prix_unitaire,
                                                       id_entete_facture: lignesfacture.id_entete_facture
     })
-    const [prixtotalligne, setprixtotalligne] = useState((lignesfacture.quantite * lignesfacture.prix_unitaire))
+    const [prixtotalligne, setprixtotalligne] = useState(parseFloat((lignesfacture.quantite * lignesfacture.prix_unitaire)).toFixed(2))
 
     const handleChange = (event) => {
         formHandleChange(event, lignefacture, setlignefacture)

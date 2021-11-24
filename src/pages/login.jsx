@@ -45,7 +45,7 @@ export default function Login() {
                                     </div>
                                 )
                             }
-                            <InputLabel name="email" className="form-control my-3 p-2" value={login.email} change={handleChange} type="Email" label="Email" placeholder="mr.dupont@ping-pong.fr" required="true"/>
+                            <InputLabel name="email" className="form-control my-3 p-2" value={login.email} change={handleChange} type="Email" label="Email" placeholder="mr.dupont@free.fr" required="true"/>
                             <InputLabel name="pwd" className="form-control my-3 p-2" value={login.pwd} change={handleChange} type="password" label="Mot de passe" placeholder="********" required="true"/>
                             <div className="form-row">
                                 <div className="col-lg-7">
